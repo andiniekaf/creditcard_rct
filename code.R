@@ -72,7 +72,19 @@ summary(lmp(takeup~upgr_pstv+income+female+muslim+jakarta+credit_limit,data=exp_
 
 ## MTURK EXPERIMENT
 summary(lmp(rosenberg~self,data=mturk,perm="Prob",Iter=10000,seqs=TRUE))
-summary(lmp(rosenberg~self+age+race_1+race_2+race_3+race_4+education+income,data=mturk,perm="Prob",Iter=10000,seqs=TRUE))
+summary(lmp(rosenberg~self+age+race_1+race_2+race_3+race_4+education+income+married,data=mturk,perm="Prob",Iter=10000,seqs=TRUE))
 
+summary(lmp(demand_armani_offer1~self,data=mturk,perm="Prob",Iter=10000,seqs=TRUE))
+summary(lmp(demand_armani_offer1~self+age+race_1+race_2+race_3+race_4+education+income+married,data=mturk,perm="Prob",Iter=10000))
 
+summary(lmp(demand_armani_offer2~self,data=mturk,perm="Prob",Iter=10000,seqs=TRUE))
+summary(lmp(demand_armani_offer2~self+age+race_1+race_2+race_3+race_4+education+income+married,data=mturk,perm="Prob",Iter=10000))
 
+summary(lmp(demand_armani_offer3~self,data=mturk,perm="Prob",Iter=10000,seqs=TRUE))
+summary(lmp(demand_armani_offer3~self+age+race_1+race_2+race_3+race_4+education+income+married,data=mturk,perm="Prob",Iter=10000))
+
+summary(lmp(demand_armani_offer4~self,data=mturk,perm="Prob",Iter=10000,seqs=TRUE))
+summary(lmp(demand_armani_offer4~self+age+race_1+race_2+race_3+race_4+education+income+married,data=mturk,perm="Prob",Iter=10000))
+
+summary(lmp(demand_armani_offer5~self,data=mturk,perm="Prob",Iter=10000,seqs=TRUE))
+summary(lmp(demand_armani_offer5~self+age+race_1+race_2+race_3+race_4+education+income+married,data=mturk,perm="Prob",Iter=10000))
