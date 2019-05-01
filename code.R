@@ -37,7 +37,7 @@ aggregate(decision ~ Treatment, FUN=mean, data=exp_1_group2)
 oneway_test(exp_1_group1$decision ~ exp_1_group1$Treatment, alternative="two.sided", distribution="exact")
 oneway_test(exp_1_group2$decision ~ exp_1_group2$Treatment, alternative="two.sided", distribution="exact")
 
-summary(lmp(decision~Platinum_upgrade_d,data=exp_1,perm="Prob",maxIter=10000))
+summary(lmp(decision~Platinum_upgrade_d,data=exp_1,perm="Prob",Iter=10000,seqs=TRUE))
 summary(lmp(decision~Platinum_upgrade_d+jakarta+muslim+factor(strata)+female+credit_limit+caller_1+caller_2+caller_3+caller_4+caller_5+caller_6+caller_7+caller_8,data=exp_1,perm="Prob",maxIter=10000))
 
 ## EXPERIMENT 2
@@ -48,5 +48,31 @@ aggregate(Y ~ T, FUN=mean, data=exp_2)
 exp_2$T <- as.factor(exp_2$T)
 
 oneway_test(exp_2$Y ~ exp_2$T, alternative="two.sided", distribution="exact")
-summary(lmp(Y~T,data=exp_2,perm="Prob",maxIter=10000))
-summary(lmp(Y~T+,data=exp_2,perm="Prob",maxIter=10000))
+summary(lmp(Y~T,data=exp_2,perm="Prob",Iter=10000,seqs=TRUE))
+summary(lmp(Y~T+age+credit_limit+female+muslim+jakarta,data=exp_2_group,perm="Prob",Iter=10000,seqs=TRUE))
+
+## EXPERIMENT 3
+exp_3 <- exp_3[!is.na(exp_3$takeup),]
+exp_3_upgrade_b <- exp_3[exp_3$upgr_ntrl == 1 | exp_3$upgr_pstv == 1,]
+exp_3_upgrade_p <- exp_3[exp_3$plat_ntrl == 1 | exp_3$plat_pstv == 1,]
+exp_3_upgrade_p$plat_pstv <- as.factor(exp_3_upgrade_p$plat_pstv)
+exp_3_upgrade_b$upgr_pstv <- as.factor(exp_3_upgrade_b$upgr_pstv)
+aggregate(takeup ~ plat_pstv, FUN=length, data=exp_3_upgrade_p)
+aggregate(takeup ~ plat_pstv, FUN=mean, data=exp_3_upgrade_p)
+aggregate(takeup ~ upgr_pstv, FUN=length, data=exp_3_upgrade_b)
+aggregate(takeup ~ upgr_pstv, FUN=mean, data=exp_3_upgrade_b)
+oneway_test(exp_3_upgrade_p$takeup ~ exp_3_upgrade_p$plat_pstv, alternative="two.sided", distribution="exact")
+oneway_test(exp_3_upgrade_b$takeup ~ exp_3_upgrade_b$upgr_pstv, alternative="two.sided", distribution="exact")
+
+summary(lmp(takeup~plat_pstv,data=exp_3_upgrade_p,perm="Prob",Iter=10000,seqs=TRUE))
+summary(lmp(takeup~plat_pstv+income+female+muslim+jakarta+credit_limit,data=exp_3_upgrade_p,perm="Prob",Iter=10000,seqs=TRUE))
+
+summary(lmp(takeup~upgr_pstv,data=exp_3_upgrade_b,perm="Prob",Iter=10000,seqs=TRUE))
+summary(lmp(takeup~upgr_pstv+income+female+muslim+jakarta+credit_limit,data=exp_3_upgrade_b,perm="Prob",Iter=10000,seqs=TRUE))
+
+## MTURK EXPERIMENT
+summary(lmp(rosenberg~self,data=mturk,perm="Prob",Iter=10000,seqs=TRUE))
+summary(lmp(rosenberg~self+age+race_1+race_2+race_3+race_4+education+income,data=mturk,perm="Prob",Iter=10000,seqs=TRUE))
+
+
+
